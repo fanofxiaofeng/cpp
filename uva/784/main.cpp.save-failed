@@ -1,0 +1,83 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int rowDelta[] = {1, -1, 0, 0};
+int colDelta[] = {0, 0, 1, -1};
+
+bool isValid(int, int, vector<vector<char> > &);
+
+int main(){
+    int n;
+    scanf("%d", &n);
+
+    string s;
+    getline(cin, s);
+
+    for(int i = 0;i < n;i++){
+        vector<vector<char> > maze;
+        while(true){
+            getline(cin, s);
+            if(s[0] == '_')
+                break;
+            vector<char> cvec;
+            for(int j = 0;j < s.size();j++)
+                cvec.push_back(s[j]);
+            maze.push_back(cvec);
+        }
+
+        int R = -1;
+        int C = -1;
+
+        for(int row = 0;row < maze.size();row++){
+            for(int col = 0;col < maze[row].size();col++){
+                if(maze[row][col] == '*'){
+                    R = row;
+                    C = col;
+                    goto outside;
+                }
+            }
+        }
+        outside:
+
+        queue<int> rowQ;
+        queue<int> colQ;
+        rowQ.push(R);
+        colQ.push(C);
+
+        while(!rowQ.empty()){
+            R = rowQ.front();
+            C = colQ.front();
+            rowQ.pop();
+            colQ.pop();
+
+            maze[R][C] = '#';
+            for(int loop = 0;loop < 4;loop++){
+                if(isValid(R + rowDelta[loop], C + colDelta[loop], maze)){
+                    rowQ.push(R + rowDelta[loop]);
+                    colQ.push(C + colDelta[loop]);
+                }
+            }
+        }
+
+        for(int row = 0;row < maze.size();row++){
+            for(int col = 0;col < maze[row].size();col++)
+                putchar(maze[row][col]);
+            putchar('\n');
+        }
+
+        cout << s << endl;
+    }
+}
+
+bool isValid(int row, int col, vector<vector<char> > &maze){
+    if(row < 0 || row >= maze.size())
+        return false;
+    if(col < 0 || col >= maze[row].size())
+        return false;
+    return maze[row][col] == ' ';
+}
+
