@@ -20,18 +20,13 @@ int main(){
 			current = temp;
 			cnt = 1;
 			pos = i;
-			if(cnt > opt_cnt){
-				opt_cnt = cnt;
-				opt_pos = pos;
-				// printf("already changed\n");
-			}
 		} else {
 			cnt++;
-			if(cnt > opt_cnt){
-				opt_cnt = cnt;
-				opt_pos = pos;
-				// printf("add\n");
-			}
+		}
+
+		if(cnt > opt_cnt){
+			opt_cnt = cnt;
+			opt_pos = pos;
 		}
 	}
 	printf("%d\n", opt_pos);
