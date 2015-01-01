@@ -30,7 +30,7 @@ int main(){
 	int delta = 0;
 	while(cnt != 2){
 		// printf("cnt: %d\n", cnt);
-		printf("r: %d, c: %d\n", r, c);
+		// printf("r: %d, c: %d\n", r, c);
 		move(R, C, r, c, dir);	
 		if(data[r][c] == 't')
 			cnt++;
